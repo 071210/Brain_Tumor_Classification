@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Tumor Classification</title>
+<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        color: white;
+        height: 100vh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                    url('https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+        animation: moveBG 40s linear infinite;
+        position: relative;
+    }
+
+    @keyframes moveBG {
+        0% { background-position: center top; }
+        50% { background-position: center center; }
+        100% { background-position: center top; }
+    }
+
+    .particle {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: rgba(0,123,255,0.2);
+        border-radius: 50%;
+        animation: float 15s linear infinite;
+        z-index: 0;
+    }
+    @keyframes float {
+        0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+    }
+
+    .upload-box {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        background: rgba(255,255,255,0.12);
+        padding: 50px 40px;
+        border-radius: 20px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+        max-width: 500px;
+        margin-top: 60px;
+        animation: slideIn 1s ease forwards;
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    @keyframes slideIn {
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .btn-upload, #btn-predict {
+        padding: 14px 45px;
+        font-size: 1.2rem;
+        border-radius: 50px;
+        background: linear-gradient(45deg, #00bfff, #6610f2);
+        border: none;
+        color: white;
+        transition: 0.3s;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+    .btn-upload:hover, #btn-predict:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+
+    .img-preview img {
+        max-width: 100%;
+        border-radius: 12px;
+        margin-top: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        animation: imageFade 0.5s ease forwards;
+    }
+    @keyframes imageFade { from { opacity: 0; } to { opacity: 1; } }
+
+    .tumor-info {
+        position: relative;
+        z-index: 1;
+        max-width: 950px;
+        margin: 40px auto 60px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        animation: slideUp 1s ease forwards;
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    @keyframes slideUp {
+        to { transform: translateY(0); opacity: 1; }
+    }
+    .tumor-card {
+        background: rgba(255,255,255,0.08);
+        border-radius: 15px;
+        padding: 20px;
+        width: 220px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tumor-card:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+    }
+    .tumor-card h5 { margin-bottom: 10px; font-size: 1.2rem; color: #00bfff; }
+    .tumor-card p { font-size: 0.95rem; color: #e0e0e0; }
+</style>
+</head>
+<body>
+
+<div class="particle" style="left:10%; animation-duration:18s;"></div>
+<div class="particle" style="left:30%; animation-duration:22s;"></div>
+<div class="particle" style="left:50%; animation-duration:20s;"></div>
+<div class="particle" style="left:70%; animation-duration:24s;"></div>
+<div class="particle" style="left:90%; animation-duration:26s;"></div>
+
+<div class="upload-box">
+    <h1>Brain Tumor Classification</h1>
+    <p>Upload your MRI image to predict tumor type</p>
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+        <label for="imageUpload" class="btn-upload">Choose Image</label>
+        <input type="file" id="imageUpload" name="file" accept=".png,.jpg,.jpeg" style="display:none;">
+        <div class="img-preview" id="imagePreview"></div>
+        <button type="button" id="btn-predict" class="btn-upload" style="display:none;">Predict Now</button>
+    </form>
+</div>
+
+<div class="tumor-info">
+    <div class="tumor-card">
+        <h5>Glioma</h5>
+        <p>Most common type of brain tumor, arises from glial cells, can be malignant or benign.</p>
+    </div>
+    <div class="tumor-card">
+        <h5>Meningioma</h5>
+        <p>Usually benign, grows from the meninges, may cause pressure symptoms.</p>
+    </div>
+    <div class="tumor-card">
+        <h5>Pituitary Tumor</h5>
+        <p>Occurs in the pituitary gland, can affect hormone levels and vision.</p>
+    </div>
+    <div class="tumor-card">
+        <h5>No Tumor</h5>
+        <p>This MRI scan shows no signs of a brain tumor. The brain structure appears normal and healthy.</p>
+    </div>
+</div>
+
+<script>
+const imageUpload = document.getElementById('imageUpload');
+const imagePreview = document.getElementById('imagePreview');
+const btnPredict = document.getElementById('btn-predict');
+
+imageUpload.addEventListener('change', function() {
+    const file = this.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            imagePreview.innerHTML = `<img src="${e.target.result}" alt="MRI Image">`;
+            btnPredict.style.display = 'inline-block';
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+btnPredict.addEventListener('click', function(e){
+    e.preventDefault();
+    const file = imageUpload.files[0];
+    if(!file) {
+        alert('Please select an image first');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Disable button during prediction
+    btnPredict.disabled = true;
+    btnPredict.textContent = 'Analyzing...';
+
+    fetch('/predict', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.error){
+            alert(data.error);
+            btnPredict.disabled = false;
+            btnPredict.textContent = 'Predict Now';
+            return;
+        }
+
+        // Redirect to result page
+        if(data.success && data.redirect) {
+            window.location.href = data.redirect;
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('An error occurred during prediction');
+        btnPredict.disabled = false;
+        btnPredict.textContent = 'Predict Now';
+    });
+});
+</script>
+
+</body>
+</html>
