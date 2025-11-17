@@ -1,1 +1,49 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Tumor Classification | Welcome</title>
+<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body {
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                    url('https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=1500&q=80');
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .welcome-box {
+        text-align: center;
+        background: rgba(255,255,255,0.12);
+        padding: 50px 70px;
+        border-radius: 25px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+    }
+    h1 { font-size: 3rem; font-weight: 700; }
+    p { font-size: 1.4rem; margin-bottom: 30px; }
+    .btn-start {
+        padding: 14px 45px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        border-radius: 40px;
+        background: linear-gradient(45deg, #003366, #330066);
+        border: none;
+        color: #ffffff;
+    }
+</style>
+</head>
+<body>
+<div class="welcome-box">
+    <h1>Brain Tumor Classification</h1>
+    <p>AI-powered MRI Analysis for Accurate Detection</p>
+    <a href="{{ url_for('upload_page') }}" class="btn btn-start">Get Started</a>
+</div>
+</body>
+</html>
