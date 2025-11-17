@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Result | Brain Tumor Classification</title>
+<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+    animation: moveBG 40s linear infinite;
+    text-align: center;
+    position: relative;
+    padding: 20px;
+}
+@keyframes moveBG {
+    0% { background-position: center top; }
+    50% { background-position: center center; }
+    100% { background-position: center top; }
+}
+.particle { position: absolute; width: 15px; height: 15px; background: rgba(0,123,255,0.2); border-radius: 50%; animation: float 15s linear infinite; z-index: 0;}
+@keyframes float { 0% { transform: translateY(100vh) translateX(0); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-10vh) translateX(50px); opacity: 0; } }
+.result-box {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.12);
+    padding: 40px 50px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+    max-width: 500px;
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+    transform: translateY(50px);
+}
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+.img-result img { max-width: 100%; border-radius: 12px; margin-top: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); animation: imageFade 0.5s ease forwards; }
+@keyframes imageFade { from { opacity: 0; } to { opacity: 1; } }
+h1 { margin-bottom: 20px; color: #00bfff; font-size: 2.5rem; }
+h3 { margin: 15px 0; color: #ffffff; font-size: 1.5rem; }
+.btn-back {
+    padding: 12px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #00bfff, #6610f2);
+    border: none;
+    color: white;
+    margin-top: 25px;
+    transition: 0.3s;
+    display: inline-block;
+    text-decoration: none;
+}
+.btn-back:hover { 
+    transform: scale(1.05); 
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    color: white;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<div class="particle" style="left:10%; animation-duration:18s;"></div>
+<div class="particle" style="left:30%; animation-duration:22s;"></div>
+<div class="particle" style="left:50%; animation-duration:20s;"></div>
+<div class="particle" style="left:70%; animation-duration:24s;"></div>
+<div class="particle" style="left:90%; animation-duration:26s;"></div>
+
+<div class="result-box">
+    <h1>Prediction Result</h1>
+    <div class="img-result">
+        <img src="{{ image_url }}" alt="Analyzed MRI">
+    </div>
+    <h3>Tumor Type: <span>{{ tumor_type }}</span></h3>
+    <h3>Confidence: <span>{{ confidence }}</span></h3>
+    <a href="{{ url_for('upload_page') }}" class="btn-back">Upload Another Image</a>
+</div>
+
+</body>
+</html>
