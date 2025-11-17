@@ -1,0 +1,7 @@
+Flask==2.3.2
+tensorflow==2.20.0
+numpy==1.26.0
+pandas==2.1.1
+matplotlib==3.8.1
+werkzeug==2.3.7
+Pillow==10.0.0
