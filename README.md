@@ -1,92 +1,63 @@
-**Brain Tumor Classification System for Hospital Malacca**
+# Brain Tumor Classification for Hospital Malacca
+**BAXI S1G1 - Group E**  
+**Universiti Teknikal Malaysia Melaka (UTeM)**  
 
-AI-Powered MRI Brain Tumor Classification 
+---
 
-The system allows medical staff to upload MRI images and receive instant predictions for:
-
+## Overview
+The Brain Tumor Classification System is an AI-powered medical imaging project developed for Hospital Melaka.
+The system assists healthcare professionals by automatically analyzing MRI brain scans and predicting four categories of brain tumors:
 - Glioma
-    
 - Meningioma
-    
-- Pituitary
-    
+- Pituitary Tumor
 - No Tumor
-    
-Built using TensorFlow, Flask, and deployed on Fly.io.
 
+The solution uses a Convolutional Neural Network (CNN) model trained in Google Colab and integrates with a Flask-based web system where hospital staff can upload MRI images to receive instant predictions.
 
-**🏥 Project Overview**
+---
 
-This project is developed for Hospital Melaka as part of a medical innovation initiative.
+## Project Objectives
+1. **Develop a high-accuracy CNN model** capable of classifying MRI brain tumors into four categories. 
+2. **Provide a simple and secure web interface** for hospital staff to upload MRI scans.  
+3. **Ensure the system is lightweight and easy to maintain**, enabling integration into hospital workflows.
 
-The goal is to assist doctors by providing fast, offline-capable, and lightweight tumor classification using CNN models trained in Google Colab.
+---
 
+## Project Modules
 
+### **Module 1 — Web Interface**
+- Develop a clean, simple UI for medical staff
+- Implement secure MRI upload page
+- Build result display page with tumor class & confidence
+- Organize templates (welcome, upload, result pages)
 
-**🧠 Model Details**
+### **Module 2 — Model Development (CNN)**
+- Use the Kaggle MRI Brain Tumor Dataset
+  https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset
+- Build CNN architecture 
+- Train model 
+- Save model as .h5
+- Validate accuracy using confusion matrix & classification report
 
-Image size: 150×150 
+### **Module 3 — Deployment & Integration**
+- Connect Flask backend for prediction API
+- Containerize app with Docker
+- Configure Fly.io
+- Test prediction performance with real MRI samples
 
-Optimizer: Adam
+---
 
-Loss: categorical crossentropy
+## Team (Group E)
 
-Training dataset: brain MRI images 
+| Name | Matric No. | Role |
+|------|-------------|------|
+| **Aevan Cheong Wei Ren** | B032310355 | Project Manager |
+| **Yew Zhi Yu** | B032310595 | Technical Support |
+| **Soon Ching Mei** | B032310451 | Marketing |
+| **Wong Jing Wen** | B032310517 | Treasurer |
+| **Hoo Jin Yi** | B032310356 | Secretary | 
 
-https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset
+---
+## Website link
+https://ai-project-management-project.fly.dev/
 
-Model saved as model.h5
-
-
-**⭐ Features  **
-
-✔ Upload MRI image via a secure web interface
-
-✔ Deep learning CNN model generates prediction
-
-✔ Real-time probability output
-
-✔ Lightweight architecture suitable for deployment on Fly.io
-
-
-**📁 Project Structure**
-
-├── app.py   
-
-├── model/
-
-│   └── brain_tumor_model.h5 
-
-├── templates/
-
-│   ├── welcome.html  
-
-│   ├── uploadImage.html  
-
-│   └── result.html
-
-├── static/
-
-│   └── uploads/
-
-├── Dockerfile   
-
-├── fly.toml    
-
-├── requirements.txt
-
-└── README.md
-
-
-
-**👨‍💻 Developers**
-
-Project Manager    - Aevan Cheong Wei Ren
-
-Technical Support  - Yew Zhi Yu
-
-Marketing          - Soon Ching Mei
-
-Treasurer          - Wong Jing Wen
-
-Secretary          - Hoo Jin Yi
